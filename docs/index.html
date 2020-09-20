@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Home</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">Selector project</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="Selector.html">Selector</a></li></ul><h3><a href="global.html">Global</a></h3></div><div class="category"><h2>Hooks</h2><h3>Global</h3><ul><li><a href="global.html#useClickOutside">useClickOutside</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p></p>
+                    <h1>Home</h1>
+                </header>
+                
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>Selector</h1>
+<p>This project developed for achieving a roadmap aims.</p>
+<h2>Getting started</h2>
+<p>These instructions will get you a copy of the project up and running on your local machine for testing purposes.</p>
+<h3>Prerequisites</h3>
+<p>You need to have installed Node.js version 10.16.0 or above.</p>
+<p>For windows:</p>
+<p><a href="https://nodejs.org/download/release/v10.16.0/node-v10.16.0-x64.msi">Download</a> Node.js installer from the node site and setup.</p>
+<p>Alternatives:</p>
+<ul>
+<li>Using <a href="https://chocolatey.org/">Chocolatey</a>:</li>
+</ul>
+<pre class="prettyprint source"><code>cinst nodejs --version 10.16.0
+</code></pre>
+<ul>
+<li>Using <a href="https://scoop.sh/">Scoop</a>:</li>
+</ul>
+<pre class="prettyprint source"><code>scoop install nodejs@10.16.0
+</code></pre>
+<p>For macOS:</p>
+<p><a href="https://nodejs.org/download/release/v10.16.0/node-v10.16.0.pkg">Download</a> Node.js installer from the node site and setup.</p>
+<p>Alternatives:</p>
+<ul>
+<li>Download the package with bash:</li>
+</ul>
+<pre class="prettyprint source"><code>curl &quot;https://nodejs.org/dist/latest/node-${10.16.0:-$(wget -qO- https://nodejs.org/dist/latest/ | sed -nE 's|.*>node-(.*)\.pkg&lt;/a>.*|\1|p')}.pkg&quot; > &quot;$HOME/Downloads/node-latest.pkg&quot; && sudo installer -store -pkg &quot;$HOME/Downloads/node-latest.pkg&quot; -target &quot;/&quot;
+</code></pre>
+<ul>
+<li>Using <a href="https://brew.sh/">Homebrew</a>:</li>
+</ul>
+<pre class="prettyprint source"><code>brew install node 10.16.0
+</code></pre>
+<h3>Installing</h3>
+<p>Clone the repository to your local machine</p>
+<pre class="prettyprint source"><code>git clone https://github.com/Nemzis02/Selector.git
+</code></pre>
+<p>Install packages</p>
+<pre class="prettyprint source"><code>npm install
+</code></pre>
+<p>Run the application on your localhost</p>
+<pre class="prettyprint source"><code>npm start
+</code></pre>
+<p>After successful the steps finishing the application will be running on <a href="http://localhost:3000">http://localhost:3000</a>: Open your browser and check it out.</p>
+<h2>Running the test</h2>
+<p>For running test execute next command</p>
+<pre class="prettyprint source"><code>npm run test
+</code></pre>
+<h2>Components documentation</h2>
+<p>The Documentation already generated, and available by path <em><strong>/docs/index.html</strong></em>. If there is any updates, the documentation can be updated by running the next command</p>
+<pre class="prettyprint source"><code>npm run docs
+</code></pre>
+<h2>Built With</h2>
+<ul>
+<li><a href="https://reactjs.org/">React</a> web framework</li>
+<li><a href="https://material-ui.com/ru/styles/basics/">Material-ui styling</a> hook</li>
+<li><a href="https://create-react-app.dev/docs/getting-started/">Create React App</a> fast bootstrap react project util</li>
+<li><a href="https://enzymejs.github.io/enzyme/">Enzyme</a> react components testing library</li>
+<li><a href="https://enzymejs.github.io/enzyme/">JSDoc</a> and <a href="https://www.npmjs.com/package/better-docs">Better-docs</a> documentation tools</li>
+</ul>
+<h2>Contributing</h2>
+<p>Please read <a href="CONTRIBUTING.md">CONTRIBUTING.md</a> for details on the code of conduct, and the process for submitting pull requests.</p>
+<h2>Versioning</h2>
+<p><a href="http://semver.org/">SemVer</a> is used for versioning. For the versions available, see the <a href="https://github.com/Nemzis02/Selector/releases">tags on this repository</a>.</p>
+<h2>Authors</h2>
+<ul>
+<li><a href="https://github.com/Nemzis02"><strong>Kirill Yerin</strong> </a></li>
+</ul>
+<h2>License</h2>
+<p>This project is licensed under the MIT License - see the <a href="LICENSE.md">LICENSE.md</a> file for details</p>
+<h2>Acknowledgments</h2>
+<ul>
+<li>Hat tip to anyone whose code was used</li>
+</ul></article>
+    </section>
+
+
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>

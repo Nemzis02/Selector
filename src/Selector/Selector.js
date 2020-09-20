@@ -61,6 +61,32 @@ const useSelectorStyles = makeStyles({
   },
 });
 
+/**
+ * A selector component takes values to display them as a list and gives a user possibility to select one value from the list
+ *
+ * @component
+ * @example
+ * const initialValue = { 
+ *  id: 1,
+ *  text: 'Option 1'
+ * };
+ * const options = [
+ *  { 
+ *    id: 1,
+ *    text: 'Option 1'
+ *  },
+ *  {
+ *    id: 2,
+ *    text: 'Option 2'
+ *  }
+ * ];
+ * const label = 'Select option:';
+ * const placeholder = 'Value...';
+ * return (
+ *    <Selector initialValue={initialValue} options={options} label={label} placeholder={placeholder} />
+ * )
+ */
+
 const Selector = ({ initialValue, label, options, placeholder }) => {
   const classes = useSelectorStyles();
   const [value, setValue] = useState(initialValue || {});
@@ -118,12 +144,24 @@ const Selector = ({ initialValue, label, options, placeholder }) => {
 };
 
 Selector.propTypes = {
+  /**
+   * Selector's default value
+   */
   initialValue: PropTypes.shape({
     id: PropTypes.number,
     text: PropTypes.string,
   }),
+  /**
+   * Selector's label
+   */
   label: PropTypes.string,
-  options: PropTypes.arrayOf(PropTypes.object),
+  /**
+   * Selector's options
+   */
+  options: PropTypes.arrayOf(PropTypes.object).isRequired,
+  /**
+   * Selector's placeholder
+   */
   placeholder: PropTypes.string,
 };
 

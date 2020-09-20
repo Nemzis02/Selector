@@ -17,7 +17,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "debug": "react-scripts --inspect-brk test --runInBand --no-cache"
+    "debug": "react-scripts --inspect-brk test --runInBand --no-cache",
+    "docs": "jsdoc -c ./jsdoc.json"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -35,7 +36,9 @@
     ]
   },
   "devDependencies": {
+    "better-docs": "^2.3.2",
     "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.4"
+    "enzyme-adapter-react-16": "^1.15.4",
+    "jsdoc": "^3.6.6"
   }
 }

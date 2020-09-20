@@ -1,0 +1,288 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Selector.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+             
+                <a href="index.html">
+                    <h1 class="navbar-item">Selector project</h1>
+                </a>
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    API Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Components</h3><ul><li><a href="Selector.html">Selector</a></li></ul><h3><a href="global.html">Global</a></h3></div><div class="category"><h2>Hooks</h2><h3>Global</h3><ul><li><a href="global.html#useClickOutside">useClickOutside</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>Selector.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useCallback } from 'react';
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/styles';
+import useClickOutside from './useClickOutside';
+
+const truncateStyles = {
+  textOverflow: 'ellipsis',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
+};
+
+const useSelectorStyles = makeStyles({
+  container: {
+    display: 'flex',
+    justifyContent: 'center',
+    marginTop: '200px',
+  },
+  selectorContainer: {
+    position: 'relative',
+    display: 'flex',
+    alignItems: 'center',
+    width: '200px',
+    height: '40px',
+    padding: '0 10px',
+    backgroundColor: '#f5f5f5',
+    cursor: 'pointer',
+  },
+  value: {
+    ...truncateStyles,
+  },
+  label: {
+    ...truncateStyles,
+    position: 'absolute',
+    top: '-25px',
+    left: 0,
+    maxWidth: '200px',
+    color: '#404040',
+  },
+  options: {
+    position: 'absolute',
+    bottom: '-10px',
+    left: 0,
+    width: '100%',
+    transform: 'translateY(100%)',
+    backgroundColor: '#f5f5f5',
+  },
+  option: {
+    ...truncateStyles,
+    padding: '10px',
+    userSelect: 'none',
+    '&amp;:not(:last-child)': {
+      borderBottom: '1px solid #b0b0b0',
+    },
+    '&amp;:hover': {
+      backgroundColor: '#dbdbdb',
+    },
+  },
+  placeholder: {
+    ...truncateStyles,
+    color: '#969696',
+  },
+});
+
+/**
+ * A selector component takes values to display them as a list and gives a user possibility to select one value from the list
+ *
+ * @component
+ * @example
+ * const initialValue = { 
+ *  id: 1,
+ *  text: 'Option 1'
+ * };
+ * const options = [
+ *  { 
+ *    id: 1,
+ *    text: 'Option 1'
+ *  },
+ *  {
+ *    id: 2,
+ *    text: 'Option 2'
+ *  }
+ * ];
+ * const label = 'Select option:';
+ * const placeholder = 'Value...';
+ * return (
+ *    &lt;Selector initialValue={initialValue} options={options} label={label} placeholder={placeholder} />
+ * )
+ */
+
+const Selector = ({ initialValue, label, options, placeholder }) => {
+  const classes = useSelectorStyles();
+  const [value, setValue] = useState(initialValue || {});
+  const [isOpen, setIsOpen] = useState(false);
+  const onOpen = useCallback(() => setIsOpen(true), []);
+  const onClose = useCallback(() => setIsOpen(false), []);
+  const selectorRef = useClickOutside(onClose);
+  const onSelect = useCallback((option) => () => setValue(option), []);
+  const textValue = value.text;
+  const isDisplayPlaceholder = !textValue &amp;&amp; placeholder;
+
+  if (!options) {
+    return null;
+  }
+
+  return (
+    &lt;div className={classes.container}>
+      &lt;div
+        ref={selectorRef}
+        id='selector'
+        className={classes.selectorContainer}
+        onClick={isOpen ? onClose : onOpen}
+      >
+        {label &amp;&amp; (
+          &lt;span id='label' className={classes.label}>
+            {label}
+          &lt;/span>
+        )}
+        {textValue &amp;&amp; (
+          &lt;span id='value' className={classes.value}>
+            {textValue}
+          &lt;/span>
+        )}
+        {isDisplayPlaceholder &amp;&amp; (
+          &lt;span id='placeholder' className={classes.placeholder}>
+            {placeholder}
+          &lt;/span>
+        )}
+        {isOpen &amp;&amp; (
+          &lt;ul id='options' className={classes.options}>
+            {options.map((option) => (
+              &lt;li
+                key={option.id}
+                className={classes.option}
+                onClick={onSelect(option)}
+              >
+                {option.text}
+              &lt;/li>
+            ))}
+          &lt;/ul>
+        )}
+      &lt;/div>
+    &lt;/div>
+  );
+};
+
+Selector.propTypes = {
+  /**
+   * Selector's default value
+   */
+  initialValue: PropTypes.shape({
+    id: PropTypes.number,
+    text: PropTypes.string,
+  }),
+  /**
+   * Selector's label
+   */
+  label: PropTypes.string,
+  /**
+   * Selector's options
+   */
+  options: PropTypes.arrayOf(PropTypes.object).isRequired,
+  /**
+   * Selector's placeholder
+   */
+  placeholder: PropTypes.string,
+};
+
+export default Selector;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+</body>
+</html>
