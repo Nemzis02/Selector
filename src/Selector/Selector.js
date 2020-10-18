@@ -43,6 +43,7 @@ const useSelectorStyles = makeStyles({
     width: '100%',
     transform: 'translateY(100%)',
     backgroundColor: '#f5f5f5',
+    zIndex: 1,
   },
   option: {
     ...truncateStyles,
@@ -66,12 +67,12 @@ const useSelectorStyles = makeStyles({
  *
  * @component
  * @example
- * const initialValue = { 
+ * const initialValue = {
  *  id: 1,
  *  text: 'Option 1'
  * };
  * const options = [
- *  { 
+ *  {
  *    id: 1,
  *    text: 'Option 1'
  *  },
