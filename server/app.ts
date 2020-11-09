@@ -2,13 +2,28 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { createConnection } = require('typeorm');
 const cors = require('cors');
+const webpush = require('web-push');
 require('reflect-metadata');
 const LanguageEntity = require('./entity/Language');
+
+const vapidKeys = {
+  publicKey:
+    'BGyvhaLpMTMenH5uEXcMNVlYGONvkfPMvo11pY7QdbDrzqrw20DS6jZN9P-sCWY6gQsAAJCGahm-0VJ3RlxmbeY',
+  privateKey: 'xrd__KBJkafduMhTaaXq5JZV_NiG1AR1tls8tUKTudQ',
+};
+
+console.log(vapidKeys);
+webpush.setVapidDetails(
+  'mailto:web-push-book@gauntface.com',
+  vapidKeys.publicKey,
+  vapidKeys.privateKey
+);
 
 const { Schema, connection, model } = mongoose;
 
 const app = express();
 
+app.use(express.json());
 app.use(cors());
 
 mongoose.connect('mongodb://localhost:27017/languages', {
@@ -25,6 +40,12 @@ const languageSchema = new Schema({
 });
 
 const Language = model('Language', languageSchema);
+
+const triggerPushMsg = (subscription, dataToSend) => {
+  return webpush.sendNotification(subscription, dataToSend).catch((err) => {
+    throw err;
+  });
+};
 
 createConnection()
   .then(async (connection) => {
@@ -43,6 +64,14 @@ createConnection()
         .orderBy('language.rating', 'DESC')
         .getMany();
       res.json(languages);
+    });
+
+    app.post('/trigger-push-msg', function (req, res) {
+      const { subscription, payload } = req.body;
+      triggerPushMsg(JSON.parse(subscription), JSON.stringify(payload));
+
+      res.setHeader('Content-Type', 'application/json');
+      res.send(JSON.stringify({ data: { success: true } }));
     });
 
     app.listen(3040, () => {

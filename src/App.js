@@ -1,7 +1,23 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { Selector } from './Selector';
 
-const fetchData = async (path, query) => {
+const askPermission = () => {
+  return new Promise(function (resolve, reject) {
+    const permissionResult = Notification.requestPermission(function (result) {
+      resolve(result);
+    });
+
+    if (permissionResult) {
+      permissionResult.then(resolve, reject);
+    }
+  }).then(function (permissionResult) {
+    if (permissionResult !== 'granted') {
+      throw new Error("We weren't granted permission.");
+    }
+  });
+};
+
+const fetchData = async ({ path, query, options }) => {
   const baseUrl = 'http://localhost:3040';
   let search = '';
 
@@ -22,11 +38,32 @@ const fetchData = async (path, query) => {
   }
 
   try {
-    return await fetch(`${url}`).then((res) => res.json());
+    return await fetch(`${url}`, options).then((res) => res.json());
   } catch (error) {
     console.error(error);
     return [];
   }
+};
+
+const sendNotification = ({ title, body }) => {
+  fetchData({
+    path: '/trigger-push-msg',
+    options: {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        subscription: window.localStorage.getItem('messageSubscription'),
+        payload: {
+          notification: {
+            title,
+            body,
+          },
+        },
+      }),
+    },
+  });
 };
 
 const normalizeData = (data) =>
@@ -44,19 +81,22 @@ const App = () => {
 
   useEffect(() => {
     const fetchMongoLanguages = async () => {
-      const mongoLanguages = await fetchData('/mongo');
+      const mongoLanguages = await fetchData({ path: '/mongo' });
       setMongoLanguages(normalizeData(mongoLanguages));
     };
 
     const fetchPostgresLanguages = async () => {
-      const postgresLanguages = await fetchData('/postgres');
+      const postgresLanguages = await fetchData({ path: '/postgres' });
       setPostgresLanguages(normalizeData(postgresLanguages));
     };
 
     const fetchPostgresRatingRangeLanguages = async (ratingMin, ratingMax) => {
-      const postgresLanguages = await fetchData('/postgres', {
-        ratingMin,
-        ratingMax,
+      const postgresLanguages = await fetchData({
+        path: '/postgres',
+        query: {
+          ratingMin,
+          ratingMax,
+        },
       });
 
       setPostgresRatingRangeLanguages(normalizeData(postgresLanguages));
@@ -77,12 +117,19 @@ const App = () => {
     );
   }, [postgresRatingRangeLanguages]);
 
+  const onChange = (value) => {
+    askPermission().then(() =>
+      sendNotification({ title: 'Language:', body: value.text })
+    );
+  };
+
   return (
     <>
       <Selector
         label='MongoDB languages:'
         options={mongoLanguages || []}
         placeholder='Select language...'
+        onChange={onChange}
       />
       <Selector
         label='Postgres languages:'

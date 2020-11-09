@@ -5,10 +5,11 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongoose": "^5.10.7",
+    "mysql": "^2.14.1",
     "pg": "^7.3.0",
     "reflect-metadata": "^0.1.10",
     "typeorm": "0.2.28",
-    "mysql": "^2.14.1"
+    "web-push": "^3.4.4"
   },
   "scripts": {
     "start": "nodemon --watch '**/*.ts'  --exec 'ts-node' app.ts"

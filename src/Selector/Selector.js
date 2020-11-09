@@ -88,14 +88,22 @@ const useSelectorStyles = makeStyles({
  * )
  */
 
-const Selector = ({ initialValue, label, options, placeholder }) => {
+const Selector = ({ initialValue, label, options, placeholder, onChange }) => {
   const classes = useSelectorStyles();
   const [value, setValue] = useState(initialValue || {});
   const [isOpen, setIsOpen] = useState(false);
   const onOpen = useCallback(() => setIsOpen(true), []);
   const onClose = useCallback(() => setIsOpen(false), []);
   const selectorRef = useClickOutside(onClose);
-  const onSelect = useCallback((option) => () => setValue(option), []);
+  const onSelect = useCallback(
+    (option) => () => {
+      setValue(option);
+      if (onChange) {
+        onChange(option);
+      }
+    },
+    [onChange]
+  );
   const textValue = value.text;
   const isDisplayPlaceholder = !textValue && placeholder;
 
@@ -164,6 +172,10 @@ Selector.propTypes = {
    * Selector's placeholder
    */
   placeholder: PropTypes.string,
+  /**
+   * Selector's onChange handle
+   */
+  onChange: PropTypes.func,
 };
 
 export default Selector;
